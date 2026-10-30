@@ -24,5 +24,5 @@
         <p>Проверьте ссылку или вернитесь к списку.</p>
     </div>
 <?php endif; ?>
-<p><a class="button button--secondary" href="index.php">Назад к списку</a></p>
+<p><a class="button button--secondary" href="index.php?action=products">Назад к списку</a></p>
 <?php require __DIR__ . '/../../../include/footer.php'; ?>
