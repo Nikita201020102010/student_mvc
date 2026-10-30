@@ -23,19 +23,19 @@ class ProductController
         $price = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = trim($_POST['title'] ?? '');
-            $email = trim($_POST['price'] ?? '');
+            $title = trim($_POST['title'] ?? '');
+            $price = trim($_POST['price'] ?? '');
 
-            if ($name === '') {
+            if ($title === '') {
                 $errors[] = 'Укажите название товара.';
             }
-            if (!filter_var($price, FILTER_VALIDATE_PRICE)) {
-                $errors[] = 'Укажите цену продукта.';
+            if (!is_numeric($price) || (float) $price < 0) {
+                $errors[] = 'Укажите корректную цену товара.';
             }
 
             if (!$errors) {
-                Product::create($title, $price);
-                header('Location: index.php');
+                Product::create($title, (float) $price);
+                header('Location: index.php?action=products');
                 exit;
             }
         }
@@ -45,7 +45,7 @@ class ProductController
 
     public function statistics(): void
     {
-        $products = Student::all();
+        $products = Product::all();
         $totalProducts = count($products);
         require __DIR__ . '/../Views/products/statistics.php';
     }
